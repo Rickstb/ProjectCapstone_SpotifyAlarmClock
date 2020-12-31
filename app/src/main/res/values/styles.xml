@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="MainClock">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:gravity">center</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">@dimen/Main_clock_Size</item>
+        <item name="autoSizeTextType">uniform</item>
+        <item name="android:layout_marginTop">5dp</item>
+        <item name="android:format12Hour">"hh:mm"</item>
+        <item name="android:fontFamily">sans-serif-medium"</item>
+    </style>
+
+    <style name="MainDate">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">center</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">@dimen/Main_date_Size</item>
+        <item name="autoSizeTextType">uniform</item>
+        <item name="android:layout_marginBottom">5dp</item>
+        <item name="android:text">@string/Date</item>
+        <item name="android:fontFamily">sans-serif-medium"</item>
+    </style>
+
+    <style name="AlarmTitle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">left</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">@dimen/Main_Title</item>
+        <item name="autoSizeTextType">uniform</item>
+        <item name="android:layout_margin">5dp</item>
+        <item name="android:paddingLeft">10dp</item>
+        <item name="android:text">@string/AlarmTitle</item>
+        <item name="android:fontFamily">sans-serif-medium"</item>
+    </style>
+</resources>

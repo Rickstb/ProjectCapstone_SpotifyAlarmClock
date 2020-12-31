@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">ProjectCapstone_SpotifyAlarmClock</string>
+    <string name="AlarmTitle">Alarms</string>
+
+    <string name="Date">%.1, %.2, %.3</string>
+    <string name="Monday">M</string>
+    <string name="Tuesday">T</string>
+    <string name="Wednesday">W</string>
+    <string name="Thursday">T</string>
+    <string name="Friday">F</string>
+    <string name="Saturday">S</string>
+    <string name="Sunday">S</string>
+
+</resources>
