@@ -8,15 +8,16 @@ import com.example.projectcapstone_spotifyalarmclock.model.Alarm
 
 @Dao
 interface AlarmDAO {
-    @Query("SELECT * FROM Alarmlist")
-    suspend fun getAllAlarms(): List<Alarm>
 
     @Insert
-    suspend fun insertAlarm (alarm : Alarm)
+    fun insertAlarm (alarm : Alarm): Long
 
-    @Delete
-    suspend fun deleteAlarm(alarm: Alarm)
+    @Query("SELECT * FROM Alarmlist")
+    fun getAllAlarms(): MutableList<Alarm>
 
     @Query("UPDATE alarmlist SET alarmactive = :alarmactive WHERE id = :idAlarm")
     fun updateActive(idAlarm: Long, alarmactive: Boolean)
+
+    @Delete
+     fun deleteAlarm(alarm: Alarm)
 }

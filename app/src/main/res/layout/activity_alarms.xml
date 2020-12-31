@@ -60,6 +60,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center|bottom"
         android:layout_margin="15dp"
+        android:backgroundTint="@color/white"
         android:src="@drawable/ic_plus"/>
     </FrameLayout>
 
