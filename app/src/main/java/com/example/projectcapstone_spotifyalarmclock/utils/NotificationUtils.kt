@@ -33,8 +33,8 @@ class NotificationUtils {
             notiManager.notify(222, builder.build())
         }
 
-        fun createNotificationChannel(context: Context) {
-// A notification channel must be created for this version of Android onwards
+        private fun createNotificationChannel(context: Context) {
+
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
 
                 val descriptionText = CHANNEL_DESCRIPTION

@@ -5,6 +5,8 @@ import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -15,12 +17,12 @@ import com.example.projectcapstone_spotifyalarmclock.model.Alarm
 import com.example.projectcapstone_spotifyalarmclock.utils.AlarmAdapter
 import com.example.projectcapstone_spotifyalarmclock.utils.AlarmUtils
 import kotlinx.android.synthetic.main.activity_alarms.*
+import java.text.SimpleDateFormat
 import java.util.*
 
-const val COD_CREATE_ALARM = 354
 
-class AlarmsActivity : AppCompatActivity(),AlarmAdapter.OnEnableAlarmListener,
-     AlarmAdapter.OnLongClickAlarmListener {
+class AlarmsActivity : AppCompatActivity(), AlarmAdapter.OnEnableAlarmListener,
+    AlarmAdapter.OnLongClickAlarmListener {
 
     //var contNoAlarms: LinearLayout? = null
     var recyclerAlarms: RecyclerView? = null
@@ -41,18 +43,23 @@ class AlarmsActivity : AppCompatActivity(),AlarmAdapter.OnEnableAlarmListener,
             getString(R.string.db_name)
         ).build()
 
-        Thread { // Access to the database must be done in another thread
+        Thread {
             val alarms = db?.alarmDAO()?.getAllAlarms() ?: mutableListOf()
 
             runOnUiThread {
                 alarmAdapter?.alarms = alarms
-               // toggleVisibilityNoAlarms()
+              //  toggleVisibilityNoAlarms()
             }
 
         }.start()
+        val today: Calendar = Calendar.getInstance()
+        println(SimpleDateFormat("EEEE, d MMMM").format((today.time)))
+        TextDate.text = SimpleDateFormat("EEEE, d MMMM").format((today.time))
+
     }
+
     private fun linkXML() {
-       // contNoAlarms = findViewById(R.id.cont_no_hay_alarmas)
+      //  contNoAlarms = findViewById(R.id.ll_alarms)
         recyclerAlarms = findViewById(R.id.rvAlarms)
 
         val lmAlarms = LinearLayoutManager(this)
@@ -67,14 +74,15 @@ class AlarmsActivity : AppCompatActivity(),AlarmAdapter.OnEnableAlarmListener,
 
 //    private fun toggleVisibilityNoAlarms() {
 //        alarmAdapter?.let {
-//            contNoAlarms?.visibility = if ( it.itemCount > 0 ) View.GONE else View.VISIBLE
+//            contNoAlarms?.visibility = if (it.itemCount > 0) View.GONE else View.VISIBLE
 //        }
 //    }
 
     private fun initview() {
-        fabAddAlarm.setOnClickListener{
+        fabAddAlarm.setOnClickListener {
             val intent = Intent(this, SetAlarmActivity::class.java)
-            startActivity(intent)
+            startActivityForResult(intent,1)
+
         }
     }
 
@@ -83,18 +91,17 @@ class AlarmsActivity : AppCompatActivity(),AlarmAdapter.OnEnableAlarmListener,
 
         if (resultCode == Activity.RESULT_OK) {
 
-            when (requestCode) {
-                COD_CREATE_ALARM ->{
 
-                    val hour = data?.getIntExtra(SetAlarmActivity.Args.HOUR, 0 ) ?: 0
-                    val minutes = data?.getIntExtra(SetAlarmActivity.Args.MINUTES, 0 ) ?: 0
+
+                    val hour = data?.getIntExtra(SetAlarmActivity.Args.HOUR, 0) ?: 0
+                    val minutes = data?.getIntExtra(SetAlarmActivity.Args.MINUTES, 0) ?: 0
 
                     val alarm = Alarm(hour, minutes, alarmactive = false)
 
-                    Thread {// Access to the database must be done in another thread
+                    Thread {
 
                         val id = db?.alarmDAO()?.insertAlarm(alarm) ?: 0
-                        Log.v("TESTING", "Id inserted: &${ id }")
+                        Log.v("TESTING", "Id inserted: &${id}")
 
                         alarm.id = id
 
@@ -109,8 +116,7 @@ class AlarmsActivity : AppCompatActivity(),AlarmAdapter.OnEnableAlarmListener,
                 }
             }
 
-        }
-    }
+
 
     override fun onEnableAlarm(alarm: Alarm, position: Int) {
 
@@ -139,8 +145,8 @@ class AlarmsActivity : AppCompatActivity(),AlarmAdapter.OnEnableAlarmListener,
     override fun onLongClickAlarm(alarm: Alarm, position: Int) {
 
         val dialog = AlertDialog.Builder(this)
-            .setTitle("¿\n" +"You sure want to remove the alarm from ${ alarm.hourFormat }${ alarm.amPm }?")
-            .setPositiveButton("YES") {_, _ ->
+            .setTitle("Are you sure want to remove this alarm?")
+            .setPositiveButton("YES") { _, _ ->
 
                 Thread {
 
@@ -159,19 +165,8 @@ class AlarmsActivity : AppCompatActivity(),AlarmAdapter.OnEnableAlarmListener,
             .setNegativeButton("NO", null)
             .create()
 
-        if ( !isFinishing )
+        if (!isFinishing)
             dialog.show()
     }
 
 }
-
-       // val today: Calendar = Calendar.getInstance()
-        // println(SimpleDateFormat("EEEE,d MMMM").format((today.time)))
-        // DateFormat dateFormat = new SimpleDateFormat("EEEE,d MMMM");
-
-        // val pattern = "EEEE,d MMMM"
-        //   val simpleDateFormat = SimpleDateFormat(pattern)
-        //val date = simpleDateFormat.format(Date())
-
-
-

@@ -16,7 +16,7 @@ class AlarmReceiver : BroadcastReceiver() {
 
         NotificationUtils.launchNotifications(
             context,
-            title = "¡¡¡Alarm de ${ intent.extras?.getString(AlarmUtils.Extras.HOUR) } !!!"
+            title = "¡¡¡Alarm of ${ intent.extras?.getString(AlarmUtils.Extras.HOUR) } !!!"
         )
 
     }
