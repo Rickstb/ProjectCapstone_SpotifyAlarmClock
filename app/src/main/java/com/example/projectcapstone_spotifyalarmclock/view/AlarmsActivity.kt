@@ -127,8 +127,10 @@ class AlarmsActivity : AppCompatActivity(), AlarmAdapter.OnEnableAlarmListener,
             runOnUiThread {
 
                 if (alarm.alarmactive) {
-
+                   // Log.v("TESTING", "Id inserted:")
                     val calendar = Calendar.getInstance()
+                 //   Log.d("hour",alarm.hour.toString())
+                  //  Log.d("minutes",alarm.minutes.toString())
                     calendar.set(Calendar.HOUR_OF_DAY, alarm.hour)
                     calendar.set(Calendar.MINUTE, alarm.minutes)
                     calendar.set(Calendar.SECOND, 0)

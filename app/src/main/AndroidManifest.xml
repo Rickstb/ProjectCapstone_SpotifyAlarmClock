@@ -9,6 +9,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ProjectCapstone_SpotifyAlarmClock">
+        <receiver
+            android:name=".Receivers.AlarmReceiver"
+            android:enabled="true"
+            android:exported="true"/>
         <activity android:name=".view.SetAlarmActivity"></activity>
         <activity android:name=".view.AlarmsActivity">
             <intent-filter>
