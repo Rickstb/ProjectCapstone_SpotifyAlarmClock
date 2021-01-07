@@ -5,7 +5,7 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import com.example.projectcapstone_spotifyalarmclock.model.Alarm
-
+// Data Acces object, biedt de methoden die de rest van de app gebruikt om te communiceren met gegevens in de database.
 @Dao
 interface AlarmDAO {
 

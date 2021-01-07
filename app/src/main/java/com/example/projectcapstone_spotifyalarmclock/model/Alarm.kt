@@ -3,6 +3,8 @@ package com.example.projectcapstone_spotifyalarmclock.model
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
+// De tabel binnenin de database
+
 @Entity(tableName = "Alarmlist")
 class Alarm(
     var hour: Int,
@@ -18,10 +20,12 @@ class Alarm(
         reformatedHour(hour, minutes)
     }
 
+    //  Converteert het formaat van 24 naar 12 uur, plaatst ook een nul voor elk getal, voor het geval ze uit één cijfer bestaan
+
     private fun reformatedHour(hourInt: Int, minutesInt: Int) {
         var newMinutes: String = minutesInt.toString()
 
-        if (minutesInt < 10)  newMinutes = "0" + minutesInt
+        if (minutesInt < 10) newMinutes = "0" + minutesInt
 
         if (hourInt > 12) {
             val hour12 = hourInt - 12

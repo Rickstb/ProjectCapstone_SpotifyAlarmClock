@@ -24,7 +24,6 @@ import java.util.*
 class AlarmsActivity : AppCompatActivity(), AlarmAdapter.OnEnableAlarmListener,
     AlarmAdapter.OnLongClickAlarmListener {
 
-    //var contNoAlarms: LinearLayout? = null
     var recyclerAlarms: RecyclerView? = null
 
     var alarmAdapter: AlarmAdapter? = null
@@ -48,7 +47,6 @@ class AlarmsActivity : AppCompatActivity(), AlarmAdapter.OnEnableAlarmListener,
 
             runOnUiThread {
                 alarmAdapter?.alarms = alarms
-              //  toggleVisibilityNoAlarms()
             }
 
         }.start()
@@ -59,7 +57,6 @@ class AlarmsActivity : AppCompatActivity(), AlarmAdapter.OnEnableAlarmListener,
     }
 
     private fun linkXML() {
-      //  contNoAlarms = findViewById(R.id.ll_alarms)
         recyclerAlarms = findViewById(R.id.rvAlarms)
 
         val lmAlarms = LinearLayoutManager(this)
@@ -72,16 +69,10 @@ class AlarmsActivity : AppCompatActivity(), AlarmAdapter.OnEnableAlarmListener,
 
     }
 
-//    private fun toggleVisibilityNoAlarms() {
-//        alarmAdapter?.let {
-//            contNoAlarms?.visibility = if (it.itemCount > 0) View.GONE else View.VISIBLE
-//        }
-//    }
-
     private fun initview() {
         fabAddAlarm.setOnClickListener {
             val intent = Intent(this, SetAlarmActivity::class.java)
-            startActivityForResult(intent,1)
+            startActivityForResult(intent, 1)
 
         }
     }
@@ -92,32 +83,29 @@ class AlarmsActivity : AppCompatActivity(), AlarmAdapter.OnEnableAlarmListener,
         if (resultCode == Activity.RESULT_OK) {
 
 
+            val hour = data?.getIntExtra(SetAlarmActivity.Args.HOUR, 0) ?: 0
+            val minutes = data?.getIntExtra(SetAlarmActivity.Args.MINUTES, 0) ?: 0
 
-                    val hour = data?.getIntExtra(SetAlarmActivity.Args.HOUR, 0) ?: 0
-                    val minutes = data?.getIntExtra(SetAlarmActivity.Args.MINUTES, 0) ?: 0
+            val alarm = Alarm(hour, minutes, alarmactive = false)
 
-                    val alarm = Alarm(hour, minutes, alarmactive = false)
+            Thread {
 
-                    Thread {
+                val id = db?.alarmDAO()?.insertAlarm(alarm) ?: 0
+                Log.v("TESTING", "Id inserted: &${id}")
 
-                        val id = db?.alarmDAO()?.insertAlarm(alarm) ?: 0
-                        Log.v("TESTING", "Id inserted: &${id}")
+                alarm.id = id
 
-                        alarm.id = id
+                runOnUiThread {
 
-                        runOnUiThread {
+                    alarmAdapter?.addAlarm(alarm)
 
-                            alarmAdapter?.addAlarm(alarm)
-
-                           // toggleVisibilityNoAlarms()
-                        }
-
-                    }.start()
                 }
-            }
 
+            }.start()
+        }
+    }
 
-
+// Checkt of het alarm aanstaat (als de switch wordt overgehaald)
     override fun onEnableAlarm(alarm: Alarm, position: Int) {
 
         Thread {
@@ -127,10 +115,8 @@ class AlarmsActivity : AppCompatActivity(), AlarmAdapter.OnEnableAlarmListener,
             runOnUiThread {
 
                 if (alarm.alarmactive) {
-                   // Log.v("TESTING", "Id inserted:")
+                    // Log.v("TESTING", "Id inserted:")
                     val calendar = Calendar.getInstance()
-                 //   Log.d("hour",alarm.hour.toString())
-                  //  Log.d("minutes",alarm.minutes.toString())
                     calendar.set(Calendar.HOUR_OF_DAY, alarm.hour)
                     calendar.set(Calendar.MINUTE, alarm.minutes)
                     calendar.set(Calendar.SECOND, 0)
@@ -143,7 +129,7 @@ class AlarmsActivity : AppCompatActivity(), AlarmAdapter.OnEnableAlarmListener,
             }
         }.start()
     }
-
+// checkt op Longclick en geeft popup, verwijderd een alarm
     override fun onLongClickAlarm(alarm: Alarm, position: Int) {
 
         val dialog = AlertDialog.Builder(this)
@@ -157,8 +143,6 @@ class AlarmsActivity : AppCompatActivity(), AlarmAdapter.OnEnableAlarmListener,
                     runOnUiThread {
 
                         alarmAdapter?.deleteAlarm(alarm)
-
-                        //toggleVisibilityNoAlarms()
 
                     }
                 }.start()

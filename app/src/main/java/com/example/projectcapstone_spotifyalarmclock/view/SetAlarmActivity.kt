@@ -24,7 +24,7 @@ class SetAlarmActivity : AppCompatActivity() {
 
         timePicker = findViewById(R.id.timepicker)
     }
-
+//de add alarm button, neemt de gegevens mee van de timepicker
     fun saveAlarm(btn: View) {
         var hour: Int?
         var minutes: Int?

@@ -7,7 +7,7 @@ import android.media.RingtoneManager
 import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
-
+//zorgt ervoor dat er een geluid wordt afgespeelt als een alarm afgaat.
 const val CHANNEL_ID = "c_alarm"
 const val CHANNEL_NAME= "Alarm notifications"
 const val CHANNEL_DESCRIPTION = "Alarm app notifications"
@@ -15,7 +15,7 @@ const val CHANNEL_DESCRIPTION = "Alarm app notifications"
 class NotificationUtils {
 
     companion object {
-
+// Launcht de notification
         fun launchNotifications(context: Context, title: String) {
 
             createNotificationChannel(context)
@@ -33,6 +33,7 @@ class NotificationUtils {
             notiManager.notify(222, builder.build())
         }
 
+      //  creeert een meldingskanaal
         private fun createNotificationChannel(context: Context) {
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
